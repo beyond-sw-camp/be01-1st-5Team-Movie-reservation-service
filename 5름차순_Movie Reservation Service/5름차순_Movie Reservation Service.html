@@ -1,0 +1,712 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Movie Reservation Service</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2cb8415d-9031-415d-b40f-ddc47a28cfc4" class="page sans"><header><h1 class="page-title">Movie Reservation Service</h1><p class="page-description"></p></header><div class="page-body"><p id="e46d0a02-cbab-4307-a74f-9c1f8454f4f4" class="">
+</p><h1 id="cd65bcd2-d56c-4146-895e-f7a7d321edc4" class="block-color-blue_background">프로젝트 주제</h1><p id="e5fff2d6-2964-4382-a7c4-d90806cea15a" class="">
+</p><h2 id="1ae585d2-fe06-4ecd-b087-d26ef48930aa" class="">영화 예매 서비스</h2><h3 id="f6ba2dd0-00a2-42ff-8e13-f5067de8e9b7" class="">- 사용자가 영화를 예매할 수 있는 플랫폼 지원</h3><p id="523ef835-3f0f-4b9c-a85b-b4731cbdda52" class="">
+</p><p id="6d517636-9b18-4d31-a240-ad0342473c4c" class="">
+</p><p id="c16297a9-27b0-4add-98ad-c9982677f4f2" class="">
+</p><h1 id="3d238d2f-a10b-4bd0-9079-0888b9d6d733" class="block-color-blue_background">요구사항</h1><p id="fd2a5539-ab4c-4c26-8600-1b0beddb06ce" class="">
+</p><h2 id="6489debe-0585-4f0d-82df-309e4f8ffb30" class="block-color-brown_background">회원 가입</h2><h3 id="c61f1f3e-d898-44ac-bcfe-58cf3312c399" class="">- 이름, 주민 번호, 전화번호 등을 입력하여 회원 가입을 할 수 있다.</h3><h3 id="4d50928b-1952-438c-982c-45f19bc2bbd4" class="">- 로그인/로그아웃이 가능하다.</h3><h3 id="8c816bd8-ab48-4fc3-92fd-58458e799c66" class="">- 아이디/비밀번호 찾기가 가능하다.</h3><h2 id="c9da6ff9-ef26-4456-b0bd-d7a68106fe36" class="block-color-brown_background">상품(영화)</h2><h3 id="4bac9097-31a6-4ea0-be2e-f008672a7f5a" class="">- 고객은 상영 중인 영화와 개봉 예정 영화에 대한 상세 정보를 확인할 수 있다.</h3><ul id="62b53f13-8b1f-4baa-956b-cc0d4f68d69f" class="bulleted-list"><li style="list-style-type:disc">제목, 장르, 줄거리, 감독, 배우, 개봉일, 상영 시간 등</li></ul><h3 id="a511c506-8b46-44c2-be04-2c261671de1b" class="">- 고객은 현재 위치와 가까운 영화관을 찾을 수 있다.</h3><h3 id="d3a5f549-aa3b-4f5a-b794-dad73cfc1867" class="">- 고객은 영화를 예매순, 최신순으로 정렬할 수 있다.</h3><h3 id="4d93db5a-02b0-4a3a-a352-d9936d981714" class="">- 고객은 영화를 관람하고자 하는 날짜와 시간을 선택할 수 있다.</h3><h2 id="eee8383f-6a7d-4abb-a8c7-c7a92235d4c8" class="block-color-brown_background">예매/결제</h2><h3 id="1e30f598-0366-463f-a68f-3597e6eb5c45" class="">- 고객은 예매시 상영관을 검색할 수 있다.</h3><h3 id="68c5d98e-6730-46e9-aa7b-608222b4382e" class="">- 고객은 예매시 시간(상영 스케쥴)과 좌석을 선택할 수 있다.</h3><h3 id="a87c3482-f50f-4060-9a07-4ae61c7035be" class="">- 고객은 예매시 영화관, 상영관, 인원수를 선택할 수 있다.</h3><h3 id="3e97e90b-f76d-4d8b-86c8-b8dc332b0586" class="">- 고객은 영화 결제 시 카드로 결제 가능하다.</h3><h3 id="ebf34b35-24a8-4050-bef5-79c0c7c9526a" class="">- 고객은 영화 결제 시 할인 혜택을 받을 수 있다.</h3><h3 id="11a60ebe-9b77-4292-8d89-0ba77fd71989" class="">- 고객은 자주 가는 영화관을 등록하여 바르고 편리하게 예매 서비스를 이용할 수 있다.</h3><h3 id="a1ff1afe-2e9a-4f4b-85ef-096601cf2f01" class="">- 고객은 차량 번호를 미리 등록하여 주차 인증을 편리하게 할 수 있다.</h3><h2 id="b6cca50c-396c-4f66-9291-753b74a81fa7" class="block-color-brown_background">마이 페이지</h2><h3 id="e0d5c2c1-48a6-4bc2-8ca3-cc02811d1a7f" class="">- 예약/결제 내역을 확인할 수 있다.</h3><h3 id="031bb003-69c8-42be-9da4-c58f8ad00bb8" class="">- 회원 정보를 수정할 수 있다.</h3><h3 id="bc8fe3df-7f7a-40a7-a77a-6d082183760b" class="">- 관람한 영화에 대해 리뷰를 작성할 수 있다.</h3><h3 id="f6390f0b-558f-4420-a55c-52058ad51a5a" class="">- 고객은 자신이 작성했던 리뷰를 확인할 수 있다.</h3><h3 id="32ab85b3-cb51-494f-8544-6f7f445d6bfa" class="">- 회원 탈퇴를 할 수 있다.</h3><p id="57c688cc-8e52-45e7-ba77-d8ee97787770" class="">
+</p><p id="bee522be-0e28-4a26-a323-ecc2d8e4fb58" class="">
+</p><p id="e57cf8de-628c-41ac-b64b-c9a14b3b818c" class="">
+</p><h1 id="e20c0f89-5f78-472b-bf2c-2d0073954969" class="block-color-blue_background">개체 추출</h1><p id="1cea77c4-d9c5-407e-9abd-68581ffd56e0" class="">
+</p><h2 id="641293d7-d022-493e-a0fa-9e83e9258fc1" class="block-color-brown_background">회원</h2><h3 id="f67b52cb-c80d-47e8-a6ef-85bf7b0ce826" class="">회원 코드, ID, 비밀 번호, 이름, 주민 번호, 주소, 전화 번호, 가입 일자, 차량 번호, 예약 번호, 리뷰/평점, 즐겨찾는 영화관</h3><h2 id="ceccf906-e025-4a75-8e71-ae267c5dd052" class="block-color-brown_background">영화</h2><h3 id="6644245f-2a26-4a39-810f-40e20463958b" class="">영화 코드, 영화 제목, 영화 감독, 출연 배우, 장르, 상영관, 줄거리, 개봉 일자, 종영 일자, 평점, 상영 시간</h3><h2 id="02d82775-56d7-49d6-b474-34b874a0b57c" class="block-color-brown_background">영화관</h2><h3 id="dc3ed535-b7ef-46c4-a9fb-4f1885ae924f" class="">영화관 코드, 영화관 이름, 영화관 주소, 영화관 전화번호</h3><h2 id="ad9ab5d8-ac17-4d8e-994b-52c1fac371cc" class="block-color-brown_background">상영관</h2><h3 id="e386a511-ea40-48f2-beb3-611059213f34" class="">상영관 코드, 영화관 코드</h3><h2 id="fb12b1b7-bb32-473a-a19a-e282e40e6824" class="block-color-brown_background">좌석</h2><h3 id="c4f20ff5-9f48-4210-8d2f-22e978b7908f" class="">좌석 코드, 좌석 번호, 좌석 상태</h3><h2 id="5481fcc8-41eb-4075-a38e-fc152c4c8a8a" class="block-color-brown_background">예매</h2><h3 id="489a7703-ef87-4c11-932f-dfa08e50c5ea" class="">예매 코드, 결제 코드, 예매 날짜, 영화관 이름, 상영관 번호, 회원 번호, 금액, 인원 수, 영화 이름</h3><h2 id="973f0a8f-5787-4736-a395-0498e3924605" class="block-color-brown_background">결제</h2><h3 id="2ef99c64-6110-4052-b68e-d4a4d8ca3cfd" class="">결제 코드, 결제 방법, 결제 금액, 회원 코드, 결제 일자, 할인 여부</h3><p id="0cc68a27-1933-4570-805c-401294c40ed5" class="">
+</p><p id="5e96bb70-dede-4d2b-816d-c6f839ea634f" class="">
+</p><p id="efcd5b8e-d0ff-4712-8a0d-4944b54e925f" class="">
+</p><h1 id="d252d5e3-e4c0-4646-abad-25dc448c03f6" class="block-color-blue_background">테이블 작성</h1><p id="935a646c-ae4b-4e57-b29b-542ead1d8f1c" class="">
+</p><h2 id="16bcb869-483b-4a1a-87cd-e6f2cabc828d" class="block-color-brown_background">초기 테이블</h2><figure id="fe4cad68-ec82-4d2d-a59c-cee1ad01e42f" class="image"><a href="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/1.png"><img style="width:1062px" src="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/1.png"/></a></figure><p id="ad7adb97-089c-4e20-890f-32fd3f912eea" class="">
+</p><h2 id="c7867a57-e38d-4481-9ca0-ecb61d081088" class="block-color-brown_background">제 1 정규화</h2><figure id="f0f35c8e-fa3d-4c5d-8b03-53d727dec3e6" class="image"><a href="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/2.png"><img style="width:1312px" src="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/2.png"/></a></figure><ul id="d22959ca-c469-49f0-8ee3-11d654795562" class="bulleted-list"><li style="list-style-type:disc">감독, 배우 테이블 분리</li></ul><ul id="7113d314-8ed9-4954-8b26-0da50b32c475" class="bulleted-list"><li style="list-style-type:disc">차량번호, 좋아하는 영화관 분리</li></ul><p id="a7b98ff7-d4f9-4ca8-8c28-fcb861740ef5" class="">
+</p><h2 id="956bf156-9a8c-4d57-9fa5-46081cf4bb58" class="block-color-brown_background">제 2, 3 정규화</h2><figure id="38938944-a988-41d3-8c1e-54514143b962" class="image"><a href="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/2%25EC%25A0%2595%25EA%25B7%259C_%25ED%259B%2584.png"><img style="width:1247px" src="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/2%25EC%25A0%2595%25EA%25B7%259C_%25ED%259B%2584.png"/></a></figure><ul id="91f85f9c-10ed-48db-9418-463fb4030b13" class="bulleted-list"><li style="list-style-type:disc">예매 상세 테이블 분리</li></ul><ul id="e545cb46-02bd-4317-b90f-2ab5ba4c2232" class="bulleted-list"><li style="list-style-type:disc">회원 상세 정보 테이블 분리(개인 정보)</li></ul><p id="d0961ca2-5ea7-45fc-b2a3-1ecff0a79465" class="">
+</p><h2 id="d4e589b9-1c09-468c-8912-da144d4567bb" class="block-color-brown_background">최종 테이블</h2><p id="5451d711-0c84-4ede-b143-42ff17d7bd98" class="">
+</p><figure id="912a124a-8a56-4b17-9d6e-06e5e4624703" class="image"><a href="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/3.png"><img style="width:1378px" src="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/3.png"/></a></figure><ul id="2580f536-dd04-47a7-b74c-82480cc158b7" class="bulleted-list"><li style="list-style-type:disc">예배, 예매 상세 정보 테이블 결합 (데이터 관리 복잡으로 인한 반정규화)</li></ul><ul id="e2d49d99-82ec-4670-818b-4810e95aa2a6" class="bulleted-list"><li style="list-style-type:disc">감독, 배우 테이블과 영화 테이블의 M:M 관계 해결 위한 테이블 생성</li></ul><p id="4bf59634-59bc-428c-a847-8e8b60274a03" class="">
+</p><h2 id="bbbda6c7-ef84-4902-85dd-f2685036c9f0" class="block-color-brown_background">최종 테이블(속성 추가)</h2><figure id="c366742f-e179-4e04-8628-61be03497e1a" class="image"><a href="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/4.png"><img style="width:1377px" src="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/4.png"/></a></figure><p id="f4701670-d161-46a9-9150-8eacb51535eb" class="">
+</p><p id="89aa8ecb-174f-4e07-92d2-188ef1137d27" class="">
+</p><p id="0ef366a3-29a9-4555-869f-f552c270cc64" class="">
+</p><h1 id="8dc4e092-4b6f-478e-90b4-8e7c732dc581" class="block-color-blue_background">문제점</h1><h2 id="04945720-21c9-4d73-a1cf-0cfb16cd02c8" class="">하나의 필드에 여러 개의 데이터가 들어가 있음</h2><ul id="0c0f5eac-4df5-4501-ba58-7437ade56fa5" class="bulleted-list"><li style="list-style-type:disc">영화 테이블의 배우 필드</li></ul><h2 id="5247fd05-d1d3-400b-ada4-68e97dcdaa92" class="">테이블의 기본키에 종속 되지 않는 필드 존재</h2><ul id="e2671691-76f7-465e-bc2f-e283bfdcdbb8" class="bulleted-list"><li style="list-style-type:disc">회원 테이블의 즐겨찾는 영화관</li></ul><h2 id="5b738efb-90ac-4677-bb49-0a013a1770d0" class="block-color-blue">→ 정규화 진행</h2><p id="d9d6b9c2-faad-42a9-94fc-dfcdb1180308" class="">
+</p><h2 id="a960cb5f-eb09-42e8-b21e-5ceee88c91e1" class="">M:M 관계</h2><ul id="c7161cc4-19b7-40f5-9438-41104ac55830" class="bulleted-list"><li style="list-style-type:disc">영화:감독, 영화:배우</li></ul><h2 id="edf05fd9-ab6c-4726-aff7-603c589ae642" class="block-color-blue">→ 새로운 테이블 생성하여 연결</h2><p id="7b258b41-dbc3-46ea-b92d-f938dca8785e" class="">
+</p><h2 id="2ad342ab-31b9-4a6d-82ae-6638e9401293" class="">중복되는 외래키</h2><h2 id="a902e848-bf68-4012-af8d-cc8ffb13ae3d" class="block-color-blue">→ 식별, 비식별 관계 정리</h2><p id="5785687b-f208-498b-8d96-319a4d47c6a3" class="">
+</p><h2 id="f12e2bbc-c1a4-428f-807a-eb238504d53d" class="">식별 관계 : 자식 엔티티의 기본 키가 부모 엔티티의 기본 키 구성 요소를 포함하는 경우</h2><ul id="a56129cf-94fa-4181-83af-44bf52f3f40e" class="bulleted-list"><li style="list-style-type:disc">회원, 회원 상세 정보</li></ul><h2 id="b8e594ab-e811-4a72-ba59-28f772ff4146" class="">비식별 관계 : 자식 엔티티의 기본 키가 부모 엔티티의 기본 키 다른 속성에 의해 참조하는 경우</h2><ul id="cd9261f0-2006-42e5-a087-75db851ee459" class="bulleted-list"><li style="list-style-type:disc">회원, 예매</li></ul><p id="741a5122-aa30-4f68-af6b-a6bff5add746" class="">
+</p><p id="b19171f2-0747-4ca7-bc8b-39fd02cbf9a4" class="">
+</p><p id="5b266e96-dbdd-46fb-9087-5e8a59d6cf6e" class="">
+</p><h1 id="6f9ec008-f423-4b51-9c6b-b0062fcda7ad" class="block-color-blue_background">ERD</h1><p id="771dd8f5-f070-4a86-89e1-345d2503c573" class="">
+</p><figure id="5aed6428-d03f-4d25-b85c-6e61f464b1ad" class="image"><a href="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/erd_%25EC%25B5%259C%25EC%25A2%2585.png"><img style="width:2632px" src="Movie%20Reservation%20Service%202cb8415d9031415db40fddc47a28cfc4/erd_%25EC%25B5%259C%25EC%25A2%2585.png"/></a></figure><p id="efe68e63-6bc2-462c-b080-c04c851fd38e" class="">
+</p><p id="4cf16e0e-a099-4295-943f-47308d6017f3" class="">
+</p><p id="eb0179a4-9ed5-48e4-98a3-9769f68043c2" class="">
+</p><h2 id="cfe49652-61ab-4812-bb79-73c4b07f950b" class="block-color-blue_background">프로젝트를 통해 얻은 점</h2><p id="ae5cd115-4856-4616-b6fa-e9f8cf357c09" class="">
+</p><h2 id="279d097e-404f-4498-b7ac-fc3288fe7090" class="block-color-brown_background">DB설계 다이어그램 제작의 큰 틀</h2><ul id="ff3e6108-c345-4f53-9b68-42584cbdd2d5" class="bulleted-list"><li style="list-style-type:disc">요구사항에서 개체 뽑기 → 개체들을 바탕으로 테이블 제작 → 테이블 정리 → 다이어그램 제작</li></ul><ul id="57e8cf2f-7cee-4ab5-b34f-83623cb30ce2" class="bulleted-list"><li style="list-style-type:disc">데이터들의 속성과 데이터타입 정하기</li></ul><h2 id="13897f26-6f87-4d46-8465-023dfdf3f9d9" class="block-color-brown_background">효율적인 테이블 정리</h2><ul id="4ef395f7-a82f-464f-903a-11dcac39b4f2" class="bulleted-list"><li style="list-style-type:disc">중복되는 데이터들을 바탕으로 테이블 정리</li></ul><ul id="482872d4-ead5-4303-aae2-1b0c2ce2e96c" class="bulleted-list"><li style="list-style-type:disc">정규화</li></ul><h2 id="e5050983-d6e3-47e0-b33f-692b8c2f7c58" class="block-color-brown_background">다이어그램 제작 방법</h2><ul id="af8b1e0b-8c94-423a-be1c-f5356e532072" class="bulleted-list"><li style="list-style-type:disc">테이블들을 연결하는 다양한 방법</li></ul><p id="1c592fa4-31a5-46b5-a4a4-8d247fb2d6ef" class="">
+</p><p id="81fa9266-4cf3-4191-a2de-c125f680b50a" class="">
+</p><p id="42230ef1-0271-4231-900b-3959e8fb8984" class="">
+</p><h3 id="b88711af-8f42-4649-973f-69672bb9e242" class="block-color-blue_background">참고 자료</h3><ul id="b4c2772e-ba58-4e85-b2b5-cbcb332a744b" class="bulleted-list"><li style="list-style-type:disc">cgv 홈페이지</li></ul><ul id="14148758-026e-4dc6-8062-9843867b1003" class="bulleted-list"><li style="list-style-type:disc"><a href="https://blogpack.tistory.com/1162">https://blogpack.tistory.com/1162</a></li></ul><ul id="9109abf0-8d49-405b-9e8c-fed564315ac2" class="bulleted-list"><li style="list-style-type:disc"><a href="https://velog.io/@dadodo/DBERD-%EC%84%A4%EA%B3%84">https://velog.io/@dadodo/DBERD-설계</a></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
